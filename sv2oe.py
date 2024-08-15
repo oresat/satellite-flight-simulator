@@ -6,8 +6,7 @@ import math
 mu = 398600.4418  # Standard gravitational parameter for Earth in km^3/s^2
 mass_of_earth = 5.972 * np.power(10,24) #kg
 
-def state_vectors_to_orbital_elements(position, velocity, mass_of_sat=3.0):
-    # TECHNICALLY ITS THE NORMALIZATION VECTORS OF THE GOD DAMN POSITION AND VELOCITY VECTORS
+def state_vectors_to_orbital_elements(position, velocity):
     r = np.linalg.norm(position)
     v = np.linalg.norm(velocity)
 
@@ -81,7 +80,7 @@ def state_vectors_to_orbital_elements(position, velocity, mass_of_sat=3.0):
 def input_vector(name):
     while True:
         try:
-            vector_name = input(f"Enter the {name} vector components (x, y, z) separated by spaces: ").split()
+            vector_name = input(f"Enter the {name} vector components (x, y, z) separated by spaces in km: ").split()
             vector = list(map(float, vector_name))
             if len(vector) != 3: raise ValueError
             return np.array(vector)
@@ -92,12 +91,9 @@ def input_vector(name):
 position = input_vector("position")
 velocity = input_vector("velocity")
 
-# User input for mass of satellite
-mass_of_sat = float(input("How much does the satellite weigh (kg): "))
 
 # Convert to orbital elements
-#orbital_elements = state_vectors_to_orbital_elements([0, 0, 400], [0, 7.8, 0], 2.5)
-orbital_elements = state_vectors_to_orbital_elements(position, velocity, mass_of_sat)
+orbital_elements = state_vectors_to_orbital_elements(position, velocity)
 
 # Print the result
 print("\nOrbital Elements:")
